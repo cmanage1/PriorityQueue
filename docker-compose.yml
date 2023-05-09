@@ -1,0 +1,18 @@
+version: '1'
+services:
+  backend:
+    container_name: priorityqueue-back
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "7001:7001"
+  frontend:
+    container_name: priorityqueue-front
+    build:
+      context: ./front
+      dockerfile: Dockerfile.production
+    ports:
+      - "7002:7002"
+    environment:
+      - REACT_APP_BACKEND_URL=http://back:7001
