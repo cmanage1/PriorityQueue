@@ -1,7 +1,7 @@
-import React from 'react';
-import BaseContainer from '../BaseContainer';
-import { DashboardTopNavbar } from './DashboardTopNavbar';
-import { DashboardContent } from './DashboardContent';
+import React from "react";
+import BaseContainer from "../BaseContainer";
+import { DashboardTopNavbar } from "./DashboardTopNavbar";
+import { DashboardContent } from "./DashboardContent";
 
 export function Dashboard() {
   return (

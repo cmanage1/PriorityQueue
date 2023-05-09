@@ -1,4 +1,4 @@
-version: '1'
+version: "1"
 services:
   backend:
     container_name: priorityqueue-back
@@ -11,7 +11,7 @@ services:
     container_name: priorityqueue-front
     build:
       context: ./front
-      dockerfile: Dockerfile.production
+      dockerfile: Dockerfile.prod
     ports:
       - "7002:7002"
     environment:

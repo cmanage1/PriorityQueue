@@ -1,8 +1,8 @@
-import i18n from 'i18next';
-import detector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
+import i18n from "i18next";
+import detector from "i18next-browser-languagedetector";
+import { initReactI18next } from "react-i18next";
 
-import en from './assets/locales/en.json';
+import en from "./assets/locales/en.json";
 
 const resources = {
   en: {
@@ -10,9 +10,9 @@ const resources = {
   },
 };
 
-const language = localStorage.getItem('I18N_LANGUAGE');
+const language = localStorage.getItem("I18N_LANGUAGE");
 if (!language) {
-  localStorage.setItem('I18N_LANGUAGE', 'en');
+  localStorage.setItem("I18N_LANGUAGE", "en");
 }
 
 i18n
@@ -20,8 +20,8 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: localStorage.getItem('I18N_LANGUAGE') || 'en',
-    fallbackLng: 'en', // use en if detected lng is not available
+    lng: localStorage.getItem("I18N_LANGUAGE") || "en",
+    fallbackLng: "en", // use en if detected lng is not available
 
     keySeparator: false, // we do not use keys in form messages.welcome
 

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { Dashboard } from './dashboard/Dashboard';
-import { About } from './about/About';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import { Dashboard } from "./dashboard/Dashboard";
+import { About } from "./about/About";
 
 function AppRoutes() {
   return (
