@@ -1,16 +1,22 @@
 import React from "react";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Divider } from "@mui/material";
+import { Sessions } from "./Sessions";
+import { InputForm } from "./InputForm";
 
 export function History() {
   return (
-    <Grid container>
+    <Grid container direction={"column"} spacing={2}>
       <Grid item>
-        <Box>New Inputs</Box>
-        <Box>Rate Limit</Box>
-        <Box>Enqueue Button</Box>
+        <Box typography="h4"> History</Box>
       </Grid>
       <Grid item>
-        <Box>Clickable sessions with time</Box>
+        <InputForm />
+      </Grid>
+      <Grid item>
+        <Divider />
+      </Grid>
+      <Grid item>
+        <Sessions />
       </Grid>
     </Grid>
   );
