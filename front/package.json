@@ -1,13 +1,10 @@
 {
-  "name": "task-starter-front",
+  "name": "PriorityQueue",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
-  "engines": {
-    "node": "16.x",
-    "npm": "7.x"
-  },
+  "homepage": "https://cmanage1.github.io/",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -32,12 +29,17 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
 }
