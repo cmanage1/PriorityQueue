@@ -1,14 +1,28 @@
 # Priority Queue
 
-## How to run for production
+## Notes
 
-- `docker-compose up --build`
+- Using Node 16 (16.14.0)
 
-## How to run for development
+## Run for development
 
-1. Change `dockerfile: Dockerfile.prod` to `dockerfile: Dockerfile.dev`
-2. `docker-compose up --build`
+### Using Docker containers
 
-## How to test
+1. `docker-compose -f docker-compose.dev.yml up --build`
+2. Frontend available on `localhost:8080`
+3. Backend available on `localhost:7001`
 
-- `test`
+### Individually
+
+1. `cd front` -> `npm i` -> `npm start`
+1. `cd back` -> `npm i` -> `npm run dev`
+
+## Run for production
+
+1. `docker-compose up --build`
+2. Frontend available on `localhost:7002`
+3. Backend available on `localhost:7001`
+
+## How to test server
+
+- `node back/main.test.js`

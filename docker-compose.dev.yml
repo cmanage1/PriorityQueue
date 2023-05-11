@@ -11,8 +11,8 @@ services:
     container_name: priorityqueue-front
     build:
       context: ./front
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     ports:
-      - "8080:80"
+      - "7002:7002"
     environment:
       - REACT_APP_BACKEND_URL=http://back:7001

@@ -3,10 +3,14 @@ import detector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 
 import en from "./assets/locales/en.json";
+import fr from "./assets/locales/fr.json";
 
 const resources = {
   en: {
     translation: en,
+  },
+  fr: {
+    translation: fr,
   },
 };
 
