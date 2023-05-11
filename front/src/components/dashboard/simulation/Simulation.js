@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Grid, Box, Button, Stack, Divider } from "@mui/material";
 import { ShowVisual } from "./ShowVisual";
 import { AppContext } from "../../../context/AppContextProvider";
-import axios from "axios";
 
 export function Simulation() {
-  const { selectedTuple } = useContext(AppContext);
+  const { selectedTuple, onChange } = useContext(AppContext);
   const [buckets, setBuckets] = useState({});
   const [changeTrigger, setChangeTrigger] = useState(false);
   const [executionStack, setExecutionStack] = useState([]);
@@ -13,14 +12,17 @@ export function Simulation() {
   useEffect(() => {
     // Get buckets
     if (selectedTuple !== [] && typeof selectedTuple[0] !== "undefined") {
-      axios
-        .get("http://localhost:7001/v1/get/buckets/", {
+      onChange({
+        action: "getBuckets",
+        payload: {
           params: {
             sessionKey: selectedTuple[0],
           },
-        })
-        .then((response) => {
-          setBuckets(response.data);
+        },
+      })
+        .then((result) => {
+          setBuckets(result);
+          console.log(result);
         })
         .catch((error) => {
           console.error(error);
@@ -32,17 +34,14 @@ export function Simulation() {
     setExecutionStack([]);
   }, [selectedTuple]);
 
-  // This function changes the value of myVar
   function refreshBuckets() {
-    setChangeTrigger(!changeTrigger);
+    // setChangeTrigger(!changeTrigger);
   }
 
   function handleNext() {
-    // Send axios request to dequeue an item from the queue
-
-    console.log("Next");
+    onChange({ action: "dequeue", payload: { time: selectedTuple[0] } });
     setExecutionStack([...executionStack, "Dequeue"]);
-    refreshBuckets(); // Refresh buckets afetrwards
+    refreshBuckets();
   }
 
   function handleAll() {
@@ -76,7 +75,8 @@ export function Simulation() {
         {executionStack.map((text, index) => {
           return (
             <Box key={index} typography="body2">
-              {" "}
+              {index + 1}
+              {". "}
               {text}
             </Box>
           );

@@ -6,7 +6,7 @@ import axios from "axios";
 import * as yup from "yup";
 
 export function InputForm() {
-  const { triggerEffect } = useContext(AppContext);
+  const { triggerEffect, onChange } = useContext(AppContext);
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = (values, { resetForm }) => {
@@ -17,14 +17,7 @@ export function InputForm() {
       rateLimit: parseInt(values.field2),
     };
 
-    axios
-      .put("http://localhost:7001/v1/put/enqueue", data)
-      .then((response) => {
-        console.log("Enqueue Success", response);
-      })
-      .catch((error) => {
-        console.error("Error doing enqueue", error);
-      });
+    onChange({ action: "enqueue", payload: data });
     setSubmitting(false);
     triggerEffect();
     resetForm();

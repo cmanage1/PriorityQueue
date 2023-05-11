@@ -8,7 +8,9 @@ export function About() {
     <BaseContainer topbar={<DashboardTopNavbar />}>
       <Grid container spacing={2} sx={{ padding: "14px" }}>
         <Grid item xs={12}>
-          <Box sx={{ padding: "12px", boxShadow: 3 }}>Hi</Box>
+          <Box typography="subtitle" sx={{ padding: "12px", boxShadow: 3 }}>
+            DFM Technical Assessment
+          </Box>
         </Grid>
       </Grid>
     </BaseContainer>

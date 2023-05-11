@@ -1,7 +1,7 @@
 function PriorityQueue(defaultBuckets = {}, maxSize = 100) {
   const buckets = defaultBuckets;
 
-  const createBuckets = (set) => {
+  const createBucketKeys = (set) => {
     for (let s of set) {
       buckets[s] = 0;
     }
@@ -11,9 +11,11 @@ function PriorityQueue(defaultBuckets = {}, maxSize = 100) {
     buckets[val] += 1;
   };
 
-  const dequeue = (val) => {
+  const dequeue = () => {
     // Add rate limiter functionality here
-    buckets[val] -= 1;
+
+    const highestPriority = Object.keys(buckets)[0];
+    buckets[highestPriority] -= 1;
   };
 
   const peek = () => {
@@ -38,7 +40,7 @@ function PriorityQueue(defaultBuckets = {}, maxSize = 100) {
     return buckets;
   };
 
-  return { enqueue, dequeue, peek, isEmpty, createBuckets, getBuckets };
+  return { enqueue, dequeue, peek, isEmpty, createBucketKeys, getBuckets };
 }
 
 module.exports = { PriorityQueue };

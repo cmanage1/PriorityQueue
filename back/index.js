@@ -38,7 +38,7 @@ app.put("/v1/put/enqueue/", (req, res) => {
   }
 
   const pq = new PriorityQueue();
-  pq.createBuckets(bucketVals);
+  pq.createBucketKeys(bucketVals);
   for (let i of numbers) {
     pq.enqueue(i);
   }
@@ -50,14 +50,15 @@ app.put("/v1/put/dequeue/", (req, res) => {
   const key = req.body.time;
   const currBuckets = bucketedSessions[key];
 
-  console.log(currBuckets);
   const pq = new PriorityQueue(currBuckets);
-  // Dequeue item of highest priority
+  if (pq.peek() === 0) {
+    // move on to the next priority
+  }
   pq.dequeue();
-  bucketedSessions[time] = pq.getBuckets();
+  bucketedSessions[key] = pq.getBuckets();
 
-  // Send dequeued item back
-  res.status(200).send("Dequeue Success");
+  console.log(bucketedSessions[key]); // Send modified key,bucket back
+  res.status(200).send([key, bucketedSessions[key]]);
 });
 
 app.get("/v1/get/sessions/", (req, res) => {
@@ -66,9 +67,7 @@ app.get("/v1/get/sessions/", (req, res) => {
 
 app.get("/v1/get/buckets/", (req, res) => {
   const key = req.query.sessionKey;
-  console.log(key);
   try {
-    console.log(bucketedSessions);
     res.send(bucketedSessions[key]);
   } catch (e) {
     res.status(400).send("Error. No match");

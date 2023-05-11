@@ -4,22 +4,55 @@ import axios from "axios";
 export const AppContext = React.createContext({
   data: [],
   selectedTuple: [],
+  bucketList: {},
   triggerEffect: () => {},
-  onChangeExample: {},
+  onChange: {},
 });
 
 function AppContextProvider({ children }) {
   const [data, setData] = React.useState({});
+  const [bucketList, setBucketList] = React.useState({});
   const [triggerEffect, setTriggerEffect] = useState(false);
   const [selectedTuple, setSelectedTuple] = useState([]);
 
   // Can call all APIs here
-  const onChangeExample = useCallback(
+  const onChange = useCallback(
     ({ action, payload }) => {
       switch (action) {
-        case "startConfiguration":
-          setData({ ...data, mode: "configuration", selection: null });
+        case "dequeue":
+          axios
+            .put("http://localhost:7001/v1/put/dequeue", payload)
+            .then((response) => {
+              console.log("Response data :", response.data[1]);
+              setBucketList({
+                ...bucketList,
+                [response.data[0]]: response.data[1],
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
           break;
+        case "enqueue":
+          axios
+            .put("http://localhost:7001/v1/put/enqueue", payload)
+            .then((response) => {
+              console.log("Enqueue Success", response);
+            })
+            .catch((error) => {
+              console.error("Error doing enqueue", error);
+            });
+          break;
+        case "getBuckets":
+          return axios
+            .get("http://localhost:7001/v1/get/buckets/", payload)
+            .then((response) => {
+              return response.data;
+            })
+            .catch((error) => {
+              console.error(error);
+              return { 0: 0 };
+            });
         case "error":
           // You can make changes to your data using setData. For example: setData({... data, mode: "error"}); return "do something";
           break;
@@ -46,7 +79,8 @@ function AppContextProvider({ children }) {
   }
 
   const value = {
-    onChangeExample,
+    bucketList,
+    onChange,
     data,
     selectedTuple,
     changeSelectedSession,
