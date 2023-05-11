@@ -7,7 +7,12 @@ const { PriorityQueue } = require("./src/PriorityQueue");
 const { sessions, addSession, bucketedSessions } = require("./src/data");
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:7002");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "http://localhost:7002",
+    "http://localhost:8080",
+    "http://localhost:3000"
+  );
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"

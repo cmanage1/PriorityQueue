@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Stack, Box, Button, TextField } from "@mui/material";
 import { AppContext } from "../../../context/AppContextProvider";
-import axios from "axios";
 import * as yup from "yup";
 
 export function InputForm() {
