@@ -9,7 +9,7 @@ export const AppContext = React.createContext({
   onChange: {},
 });
 
-const BASE_URL = "http://18.222.197.6:7001"; //Change according to backend
+const BASE_URL = "http://localhost:7001/"; //Change according to backend
 
 function AppContextProvider({ children }) {
   const [data, setData] = React.useState({});
