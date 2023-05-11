@@ -1,35 +1,53 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 export const AppContext = React.createContext({
   data: [],
   selectedTuple: [],
-  bucketList: {},
   triggerEffect: () => {},
   onChange: {},
 });
 
-const BASE_URL = "http://18.222.197.6:7001"; //Change according to backend
+const BASE_URL = "http://localhost:7001"; //Change according to backend
 
 function AppContextProvider({ children }) {
   const [data, setData] = React.useState({});
-  const [bucketList, setBucketList] = React.useState({});
   const [triggerEffect, setTriggerEffect] = useState(false);
   const [selectedTuple, setSelectedTuple] = useState([]);
+  const [t] = useTranslation();
 
   // Can call all APIs here
   const onChange = useCallback(
     ({ action, payload }) => {
       switch (action) {
+        case "dequeue_all":
+          axios
+            .put(BASE_URL + "/v1/put/dequeue_all", payload)
+            .then((response) => {
+              setData({
+                ...data,
+                [response.data[0]]: response.data[1],
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          break;
         case "dequeue":
           axios
             .put(BASE_URL + "/v1/put/dequeue", payload)
             .then((response) => {
-              console.log("Response data :", response.data[1]);
-              setBucketList({
-                ...bucketList,
-                [response.data[0]]: response.data[1],
-              });
+              if (response.data === "LIMITED") {
+                alert(t("rate-limit-reach"));
+              } else if (response.data === "EMPTY") {
+                alert(t("dequeue-limit-reach"));
+              } else {
+                setData({
+                  ...data,
+                  [response.data[0]]: response.data[1],
+                });
+              }
             })
             .catch((error) => {
               console.error(error);
@@ -55,8 +73,11 @@ function AppContextProvider({ children }) {
               console.error(error);
               return { 0: 0 };
             });
-        case "error":
-          // You can make changes to your data using setData. For example: setData({... data, mode: "error"}); return "do something";
+        case "modifyValue":
+          setData({
+            ...data,
+            [payload.key]: payload.value,
+          });
           break;
         default:
           return "not recgonized";
@@ -77,11 +98,11 @@ function AppContextProvider({ children }) {
   }, [triggerEffect]);
 
   function changeSelectedSession(sessionKey) {
+    console.log("Change selected");
     setSelectedTuple([sessionKey, data[sessionKey]]);
   }
 
   const value = {
-    bucketList,
     onChange,
     data,
     selectedTuple,

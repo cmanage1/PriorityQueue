@@ -1,4 +1,13 @@
 {
   "dashboard": "Tableau de bord",
-  "about": "A propos de"
+  "about": "A propos de",
+  "history": "L'histoire",
+  "simulation": "Simulation",
+  "new-inputs": "Nouveaux apports",
+  "rate-limit": "Limite du taux",
+  "enqueue": "Enqueue",
+  "next": "Suivant",
+  "all": "Tous",
+  "rate-limit-reach": "Limite de taux atteinte",
+  "dequeue-limit-reach": "Vide. Impossible de déréférencer plus"
 }

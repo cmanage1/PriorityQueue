@@ -7,11 +7,10 @@ export function ShowVisual({ buckets }) {
   const { data, changeSelectedSession } = useContext(AppContext);
 
   useEffect(() => {
-    // Select the most recent session at default
     if (typeof data !== "undefined" && data !== "undefined") {
       changeSelectedSession(Object.keys(data)[Object.keys(data).length - 1]);
     }
-  }, [data]);
+  }, []);
 
   return (
     <Grid container spacing={2}>

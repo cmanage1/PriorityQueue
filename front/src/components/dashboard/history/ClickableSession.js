@@ -1,11 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Button } from "@mui/material";
 import { AppContext } from "../../../context/AppContextProvider";
 
 export function ClickableSession({ sessionKey, value }) {
-  const { changeSelectedSession, selectedTuple } = useContext(AppContext);
+  const { changeSelectedSession, selectedTuple, onChange } =
+    useContext(AppContext);
 
-  // Display the clicked session into the Simulation section
+  function makeArrayFromBucket(b) {
+    const inputArr = [];
+    for (const key in b) {
+      const count = b[key];
+      for (let i = 0; i < count; i++) {
+        inputArr.push(parseInt(key));
+      }
+    }
+    return inputArr;
+  }
+
+  useEffect(() => {
+    if (!Array.isArray(value)) {
+      //Display Bucket instead of original input array
+      onChange({
+        action: "modifyValue",
+        payload: { key: sessionKey, value: makeArrayFromBucket(value) },
+      });
+    }
+  }, [value]);
+
   function handleSessionClick(k) {
     changeSelectedSession(k);
   }
