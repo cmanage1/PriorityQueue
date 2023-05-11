@@ -1,5 +1,6 @@
 function PriorityQueue(defaultBuckets = {}, maxSize = 100) {
   const buckets = defaultBuckets;
+  let itemCount = 0;
 
   const createBucketKeys = (set) => {
     for (let s of set) {
@@ -8,28 +9,41 @@ function PriorityQueue(defaultBuckets = {}, maxSize = 100) {
   };
 
   const enqueue = (val) => {
+    if (Object.keys(buckets).length >= maxSize && itemCount >= maxSize) {
+      return;
+    }
+    itemCount += 1;
     buckets[val] += 1;
   };
 
   const dequeue = () => {
-    // Add rate limiter functionality here
-
-    const highestPriority = Object.keys(buckets)[0];
-    buckets[highestPriority] -= 1;
+    const bucketKeys = Object.keys(buckets);
+    for (var i = 0; i < bucketKeys.length; i++) {
+      if (buckets[bucketKeys[i]] !== 0) {
+        buckets[bucketKeys[i]] -= 1;
+        return;
+      }
+    }
   };
 
   const peek = () => {
     const priorities = Object.keys(buckets);
-    if (priorities.length === 0) {
-      return null;
+    for (let i = 0; i < priorities.length; i++) {
+      if (priorities[i] != 0) {
+        return buckets[priorities[i]];
+      }
     }
-    const highestPriority = Math.min(...priorities);
-    const highestPriorityBucket = buckets[highestPriority];
-    return highestPriorityBucket[0];
+    return buckets[priorities[0]];
   };
 
   const isEmpty = () => {
-    return Object.keys(buckets).length === 0;
+    const priorities = Object.keys(buckets);
+    for (let i = 0; i < priorities.length; i++) {
+      if (buckets[priorities[i]] !== 0) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const toString = () => {
