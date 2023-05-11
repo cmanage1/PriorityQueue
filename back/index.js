@@ -5,6 +5,8 @@ const port = 7001;
 
 const { PriorityQueue } = require("./src/PriorityQueue");
 const { sessions, addSession, bucketedSessions } = require("./src/data");
+let RATE_LIMIT = 3; //Default
+let currRate = 0;
 
 app.use((req, res, next) => {
   res.setHeader(
@@ -35,6 +37,7 @@ app.get("/v1/health", (req, res) => {
 app.put("/v1/put/enqueue/", (req, res) => {
   const numbers = req.body.numbers.sort(); // Sorting to order based on priority later
   const time = req.body.time;
+  RATE_LIMIT = req.body.rateLimit;
   addSession(numbers, time);
 
   const bucketVals = new Set();
@@ -52,14 +55,34 @@ app.put("/v1/put/enqueue/", (req, res) => {
 });
 
 app.put("/v1/put/dequeue/", (req, res) => {
+  currRate += 1;
   const key = req.body.time;
   const currBuckets = bucketedSessions[key];
 
   const pq = new PriorityQueue(currBuckets);
-  if (pq.peek() === 0) {
-    // move on to the next priority
+  if (currRate === RATE_LIMIT) {
+    currRate = 0;
+    return res.status(200).send("LIMITED"); //rate limit reached
+  } else {
+    if (pq.isEmpty()) {
+      return res.status(200).send("EMPTY");
+    }
+    pq.dequeue();
+    bucketedSessions[key] = pq.getBuckets();
+
+    console.log(bucketedSessions[key]); // Send modified key,bucket back
+    res.status(200).send([key, bucketedSessions[key]]);
   }
-  pq.dequeue();
+});
+
+app.put("/v1/put/dequeue_all/", (req, res) => {
+  const key = req.body.time;
+  const currBuckets = bucketedSessions[key];
+  const pq = new PriorityQueue(currBuckets);
+
+  while (!pq.isEmpty()) {
+    pq.dequeue();
+  }
   bucketedSessions[key] = pq.getBuckets();
 
   console.log(bucketedSessions[key]); // Send modified key,bucket back
