@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Stack, Box, Button, TextField } from "@mui/material";
 import { AppContext } from "../../../context/AppContextProvider";
+import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 
 export function InputForm() {
   const { triggerEffect, onChange } = useContext(AppContext);
   const [submitting, setSubmitting] = useState(false);
+  const [t] = useTranslation();
 
   const handleSubmit = (values, { resetForm }) => {
     setSubmitting(true);
@@ -54,7 +56,7 @@ export function InputForm() {
                     {...field}
                     id="outlined-basic"
                     autoComplete="off"
-                    label="New Inputs"
+                    label={t("new-inputs")}
                     variant="outlined"
                     placeholder="Ex: 1,3,4,4"
                     error={touched.fieldName1 && Boolean(errors.fieldName1)}
@@ -72,7 +74,7 @@ export function InputForm() {
                   <TextField
                     {...field}
                     id="outlined-basic"
-                    label="Rate Limit"
+                    label={t("rate-limit")}
                     variant="outlined"
                     placeholder="Ex: 3"
                     autoComplete="off"

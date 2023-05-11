@@ -1,4 +1,13 @@
 {
   "dashboard": "Dashboard",
-  "about": "About"
+  "about": "About",
+  "history": "History",
+  "simulation": "Simulation",
+  "new-inputs": "New Inputs",
+  "rate-limit": "Rate Limit",
+  "enqueue": "Enqueue",
+  "next": "Next",
+  "all": "All",
+  "rate-limit-reach": "Rate Limit Reached",
+  "dequeue-limit-reach": "Empty. Can't dequeue more"
 }
