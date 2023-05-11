@@ -9,10 +9,11 @@ export const AppContext = React.createContext({
   onChange: {},
 });
 
-const BASE_URL = "http://18.222.197.6:7001";
+const BASE_URL = "http://18.222.197.6:7001"; //Change according to backend
 
 function AppContextProvider({ children }) {
   const [data, setData] = React.useState({});
+  const x = 0;
   const [bucketList, setBucketList] = React.useState({});
   const [triggerEffect, setTriggerEffect] = useState(false);
   const [selectedTuple, setSelectedTuple] = useState([]);
