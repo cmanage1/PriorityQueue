@@ -5,11 +5,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+RUN yarn install --production --cache-folder ~/.yarn-cache
 
 COPY . .
 
-RUN npm run build
+RUN yarn run build --mode=production
 
 #Production Stage**********************************************
 # Bundle static assets with nginx

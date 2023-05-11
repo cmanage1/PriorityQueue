@@ -14,13 +14,13 @@
 
 ### Individually
 
-1. `cd front` -> `npm i` -> `npm start`
+1. `cd front` -> `yarn install` -> `yarn start`
 1. `cd back` -> `npm i` -> `npm run dev`
 
 ## Run for production
 
 1. `docker-compose up --build`
-2. Frontend available on `localhost:7002`
+2. Frontend available on `localhost:8080`
 3. Backend available on `localhost:7001`
 
 ## How to test server
