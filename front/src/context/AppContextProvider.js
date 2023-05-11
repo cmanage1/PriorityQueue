@@ -9,6 +9,8 @@ export const AppContext = React.createContext({
   onChange: {},
 });
 
+const BASE_URL = "http://3.134.101.206:7001";
+
 function AppContextProvider({ children }) {
   const [data, setData] = React.useState({});
   const [bucketList, setBucketList] = React.useState({});
@@ -21,7 +23,7 @@ function AppContextProvider({ children }) {
       switch (action) {
         case "dequeue":
           axios
-            .put("http://localhost:7001/v1/put/dequeue", payload)
+            .put(BASE_URL + "/v1/put/dequeue", payload)
             .then((response) => {
               console.log("Response data :", response.data[1]);
               setBucketList({
@@ -35,7 +37,7 @@ function AppContextProvider({ children }) {
           break;
         case "enqueue":
           axios
-            .put("http://localhost:7001/v1/put/enqueue", payload)
+            .put(BASE_URL + "/v1/put/enqueue", payload)
             .then((response) => {
               console.log("Enqueue Success", response);
             })
@@ -45,7 +47,7 @@ function AppContextProvider({ children }) {
           break;
         case "getBuckets":
           return axios
-            .get("http://localhost:7001/v1/get/buckets/", payload)
+            .get(BASE_URL + "/v1/get/buckets/", payload)
             .then((response) => {
               return response.data;
             })
@@ -65,7 +67,7 @@ function AppContextProvider({ children }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:7001/v1/get/sessions")
+      .get(BASE_URL + "/v1/get/sessions")
       .then((response) => {
         setData(response.data);
       })
